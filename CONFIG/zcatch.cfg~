@@ -1,0 +1,21 @@
+sv_name GOT KICKED? Come Here! zcatch by bluelightzero
+sv_map ctf5
+sv_scorelimit 0
+sv_gametype zCatch+
+sv_rcon_password lol1234
+sv_motd By bluelightzero\n-Voting is disabled\n-you get 2 second spawn protection\n-you get 5 rechargable ammo\n-NO BOTS/AIM!\n-Spamming and spray Allowed!
+sv_max_clients 16
+sv_vote_kick 0
+sv_vote_spectate 0
+sv_mode 4
+sv_grenade_endless_ammo 0
+sv_weapons_ammo 5
+add_vote "Map 'ctf5'" sv_map ctf5
+add_vote "Map 'ctf5cave'" sv_map ctf5cave
+add_vote "Ammo 5 (Less Spray)" sv_weapons_ammo 5
+add_vote "Ammo 6" sv_weapons_ammo 6
+add_vote "Ammo 7" sv_weapons_ammo 7
+add_vote "Ammo 8" sv_weapons_ammo 8
+add_vote "Ammo 9 (More Spray)" sv_weapons_ammo 9
+add_vote "Anticamping on" sv_anticamper 1
+add_vote "Anticamping off" sv_anticamper 0

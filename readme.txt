@@ -8,3 +8,24 @@ arising from the use of this software.
 
 Please visit http://www.teeworlds.com for up-to-date information about 
 the game, including new versions, custom maps and much more.
+
+Hunter Modifications by bluelightzero.
+If you find any bugs please report to:
+
+	http://github.com/bluelightzero/teeworlds-hunter
+	
+Modifications are marked As:
+
+	/* Hunter start */
+
+	==========
+	== Code ==
+	==========
+
+	/* Hunter end */
+
+Or:
+
+	== Code == // Hunter
+
+

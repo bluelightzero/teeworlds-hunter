@@ -8,7 +8,8 @@ src/game/generated
 SDL.dll
 freetype.dll
 autoexec.cfg
-SERVER_CFG
+SERVER_CFG/hunter.cfg
+SERVER_CFG/hunter.sh
 
 crapnet*
 dilate*

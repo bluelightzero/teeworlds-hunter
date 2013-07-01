@@ -31,9 +31,9 @@ bool CLaser::HitCharacter(vec2 From, vec2 To)
 	m_Energy = -1;
 	/* Hunter Start */	
 
-	if(GameServer()->GetPlayerChar(m_Owner)->hunter)
+	if(GameServer()->GetPlayerChar(m_Owner) && GameServer()->GetPlayerChar(m_Owner)->hunter)
 	{
-		pHit->TakeDamage(vec2(0.f, 0.f), 20.0, m_Owner, WEAPON_RIFLE);
+		pHit->TakeDamage(vec2(0.f, 0.f), 10.0, m_Owner, WEAPON_RIFLE);
 	}
 	else
 	{

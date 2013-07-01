@@ -24,6 +24,7 @@ public:
 	virtual void StartRound();
 	virtual int OnCharacterDeath(class CCharacter *pVictim, class CPlayer *pKiller, int Weapon);
 	virtual void DoWincheck();
+	virtual bool CanJoinTeam(int Team, int NotThisID);
 	virtual bool CanChangeTeam(CPlayer *pPlayer, int JoinTeam);
 	virtual void OnCharacterSpawn(class CCharacter *pChr);
 	virtual void PostReset();

@@ -28,7 +28,6 @@ public:
 	void Tick();
 	void PostTick();
 	void Snap(int SnappingClient);
-	
 
 	void OnDirectInput(CNetObj_PlayerInput *NewInput);
 	void OnPredictedInput(CNetObj_PlayerInput *NewInput);
@@ -67,6 +66,7 @@ public:
 	int m_LastKill;
 	
 	bool hunter;//Hunter
+	bool dead;//Hunter
 
 	// TODO: clean this up
 	struct

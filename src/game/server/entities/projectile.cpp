@@ -74,7 +74,7 @@ void CProjectile::Tick()
 
 		if(m_Explosive)
 		/* Hunter Start */
-			if(GameServer()->GetPlayerChar(m_Owner)->hunter)
+			if(GameServer()->GetPlayerChar(m_Owner) && GameServer()->GetPlayerChar(m_Owner)->hunter)
 			{
 				GameServer()->CreateExplosion(CurPos, m_Owner, m_Weapon, false);
 				/*
@@ -95,7 +95,7 @@ void CProjectile::Tick()
 						CurPos+dir,
 						dir*0.5,
 						(int)(Server()->TickSpeed()*GameServer()->Tuning()->m_ShotgunLifetime),
-						3, 0, 0, -1, SOUND_SHOTGUN_FIRE);
+						1, 0, 0, -1, SOUND_SHOTGUN_FIRE);
 
 					// pack the Projectile and send it to the client Directly
 					CNetObj_Projectile p;

@@ -65,8 +65,8 @@ bool CCharacter::Spawn(CPlayer *pPlayer, vec2 Pos)
 	m_Pos = Pos;
 	
 	/* Hunter Start */
-
-	hunter = pPlayer->hunter;
+	if(pPlayer)
+		hunter = pPlayer->hunter;
 
 
 	/* Hunter End */
@@ -321,7 +321,7 @@ void CCharacter::FireWeapon()
 					Dir = vec2(0.f, -1.f);
 
 				/* Hunter Start */
-				pTarget->TakeDamage(vec2(0.f, -1.f) + normalize(Dir + vec2(0.f, -1.1f)) * 10.0f, 10.0,
+				pTarget->TakeDamage(vec2(0.f, -1.f) + normalize(Dir + vec2(0.f, -1.1f)) * 10.0f, 20.0,
 					m_pPlayer->GetCID(), m_ActiveWeapon);
 
 				/* Hunter End */
@@ -346,7 +346,7 @@ void CCharacter::FireWeapon()
 					ProjStartPos,
 					Direction,
 					(int)(Server()->TickSpeed()*GameServer()->Tuning()->m_GunLifetime),
-					3, 0, 0, -1, WEAPON_GUN);
+					2, 0, 0, -1, WEAPON_GUN);
 			}
 			else
 			{
@@ -815,7 +815,16 @@ bool CCharacter::TakeDamage(vec2 Force, int Dmg, int From, int Weapon)
 
 	// m_pPlayer only inflicts half damage on self
 	if(From == m_pPlayer->GetCID())
-		Dmg = max(1, Dmg/2);
+	{
+		if(hunter)
+		{
+			Dmg = 0;
+		}
+		else
+		{
+			Dmg = max(1, Dmg/2);
+		}
+	}
 
 	m_DamageTaken++;
 

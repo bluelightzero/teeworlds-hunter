@@ -39,6 +39,7 @@ void CGameControllerMOD::PostReset()
 		if(GameServer()->m_apPlayers[i])
 		{
 			GameServer()->m_apPlayers[i]->setHunter(false);
+			GameServer()->m_apPlayers[i]->dead = false;
 			GameServer()->m_apPlayers[i]->SetTeamDirect(GameServer()->m_pController->ClampTeam(1));
 			GameServer()->m_apPlayers[i]->Respawn();
 			GameServer()->m_apPlayers[i]->m_Score = 0;
@@ -74,6 +75,19 @@ void CGameControllerMOD::Tick()
 			else
 			{
 				numOfSpectators++;
+			}
+		}
+	}
+
+	if(numOfHunters==0 && numOfPlayers==0 && numOfSpectators>0)
+	{
+		for(int i = 0; i < MAX_CLIENTS; i++)
+		{
+			if(GameServer()->m_apPlayers[i])
+			{
+				GameServer()->m_apPlayers[i]->SetTeamDirect(GameServer()->m_pController->ClampTeam(1));
+				GameServer()->m_apPlayers[i]->dead=false;
+				GameServer()->m_apPlayers[i]->setHunter(false);
 			}
 		}
 	}
@@ -120,18 +134,25 @@ void CGameControllerMOD::Tick()
 int CGameControllerMOD::OnCharacterDeath(class CCharacter *pVictim, class CPlayer *pKiller, int Weapon)
 {
 	
-	if(pVictim->hunter)
+	if(pVictim && pVictim->hunter)
 	{
 		GameServer()->CreateSoundGlobal(SOUND_CTF_CAPTURE);
-		char aBuf[512];
-		str_format(aBuf, sizeof(aBuf), "Hunter '%s' was defeated!", Server()->ClientName(pVictim->GetPlayer()->GetCID()));
-		GameServer()->SendChat(-1, CGameContext::CHAT_ALL, aBuf);
+		if(pVictim->GetPlayer())
+		{
+			char aBuf[512];
+			str_format(aBuf, sizeof(aBuf), "Hunter '%s' was defeated!", Server()->ClientName(pVictim->GetPlayer()->GetCID()));
+			GameServer()->SendChat(-1, CGameContext::CHAT_ALL, aBuf);
+		}	
 		EndRound();
 	}
 	else
 	{
 		GameServer()->CreateSoundGlobal(SOUND_CTF_DROP);
-		pVictim->GetPlayer()->SetTeamDirect(TEAM_SPECTATORS);
+		if(pVictim->GetPlayer())
+		{
+			pVictim->GetPlayer()->SetTeamDirect(TEAM_SPECTATORS);
+			pVictim->GetPlayer()->dead=true;
+		}
 	}
 	
 	/*
@@ -148,9 +169,22 @@ void CGameControllerMOD::DoWincheck()
 {
 }
 
+bool CGameControllerMOD::CanJoinTeam(int Team, int NotThisID)
+{
+	if(GameServer()->m_apPlayers[NotThisID])
+	{
+		if(GameServer()->m_apPlayers[NotThisID]->dead)
+		{
+			return false;
+		}
+	}
+
+	return IGameController::CanJoinTeam(Team,NotThisID);
+}
+
 bool CGameControllerMOD::CanChangeTeam(CPlayer *pPlayer, int JoinTeam)
 {
-	return (JoinTeam == TEAM_SPECTATORS);
+	return (!pPlayer->dead);
 }
 
 void CGameControllerMOD::OnCharacterSpawn(class CCharacter *pChr)
@@ -163,3 +197,4 @@ void CGameControllerMOD::OnCharacterSpawn(class CCharacter *pChr)
 		pChr->GiveWeapon(WEAPON_HAMMER, -1);
 	pChr->GiveWeapon(WEAPON_GUN, 10);
 }
+

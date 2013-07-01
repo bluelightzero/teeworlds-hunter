@@ -1,9 +1,0 @@
-sv_name ZCATCH NO VOTING!!!!
-sv_map ctf5
-sv_scorelimit 0
-sv_gametype zCatch
-sv_rcon_password lol1234
-sv_motd No voting here! YAY =D! All goes!
-sv_max_clients 16
-sv_vote_kick 0
-sv_mode 4
